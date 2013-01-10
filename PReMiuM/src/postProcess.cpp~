@@ -148,10 +148,13 @@ SEXP pYGivenZW(SEXP betaIn,SEXP thetaIn,SEXP zAlloc,SEXP sigmaBeta,
 
     vector<double> thetaTmp(maxnN+1);
     unsigned int k=0;
+//std::cout<<"__________"<<std::endl;
 	for (unsigned int i=0; i<nN.size();i++) {
 		thetaTmp.at(nN[i]) = theta[k];
 		k++;
+//std::cout<<theta[k]<<std::endl;
 	}
+//std::cout<<"__________"<<std::endl;
 	vector<double> pred(nSj);
 	for (unsigned int i=0; i<nSj;i++) {
 		pred[i] = thetaTmp.at(z(i));
@@ -169,6 +172,42 @@ SEXP pYGivenZW(SEXP betaIn,SEXP thetaIn,SEXP zAlloc,SEXP sigmaBeta,
 	double output = 0.0;
 	for (unsigned int i=0;i<nSj;i++){
 		output = output + yM[i] * predictorAll.at(i)-log(1+exp(predictorAll.at(i)));
+
+//if ( std::isinf(output)) {
+//	std::cout<<output<<std::endl;
+//std::cout<<yM[i]<<std::endl;
+//std::cout<<predictorAll.at(i)<<std::endl;
+//std::cout<<"problems start here"<<std::endl;
+
+// all inf
+//std::cout<<log(1+exp(predictorAll.at(i)))<<std::endl;
+//std::cout<<1+exp(predictorAll.at(i))<<std::endl;
+//std::cout<<exp(predictorAll.at(i))<<std::endl;
+
+//std::cout<<predictorAll.at(i)<<std::endl;
+//std::cout<<pred[i]<<std::endl;
+//std::cout<<bW[i]<<std::endl;
+
+//std::cout<<"---------"<<std::endl;
+
+//std::cout<<thetaTmp.at(z(i))<<std::endl;
+//std::cout<<z(i)<<std::endl;
+//std::cout<<i<<std::endl;
+
+//std::cout<<"---"<<std::endl;
+
+  //  vector<double> thetaTmp(maxnN+1);
+    //unsigned int k=0;
+	//for (unsigned int i=0; i<nN.size();i++) {
+	//	thetaTmp.at(nN[i]) = theta[k];
+	//	k++;
+//std::cout<<theta[k]<<std::endl;
+//	}
+
+
+//break;
+//}
+
 	}
 	// contribution from theta
 	double paramsThetaTmp = 1/pow(sigmaT,2);
