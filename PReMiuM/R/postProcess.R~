@@ -1804,8 +1804,7 @@ calcPredictions<-function(riskProfObj,predictResponseFileName=NULL, doRaoBlackwe
 			"doRaoBlackwell"=doRaoBlackwell,
 			"mae"=mae)
 	}else{
-		output<-list("bias"=NA,"rmse"=NA,"observedY"=NA,"predictedY"=apply(predictedY,c(2,3),mean,2),"doRaoBlackwell"=doRaoBlackwell,
-			"mae"=NA)
+		output<-list("bias"=NA,"rmse"=NA,"observedY"=NA,"predictedY"=apply(predictedY,c(2,3),mean,2),"doRaoBlackwell"=doRaoBlackwell)
 	}
 	if(fullSweepPredictions){
 		output$predictedYPerSweep<-predictedY
