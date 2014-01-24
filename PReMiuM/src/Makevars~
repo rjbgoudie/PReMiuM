@@ -4,8 +4,8 @@ PKG_LIBS = $(shell $(R_HOME)/bin/Rscript -e "Rcpp:::LdFlags()" )
 
 PKG_CPPFLAGS=-I./include 
 
-CC = gcc-4.8 -std=gnu99 -fsanitize=undefined -fno-omit-frame-pointer -fcatch-undefined-behavior
-CXX = g++-4.8 -fsanitize=undefined -fno-omit-frame-pointer -fcatch-undefined-behavior
+CC = gcc-4.8 -std=gnu99 -fsanitize=undefined -fno-omit-frame-pointer
+CXX = g++-4.8 -fsanitize=undefined -fno-omit-frame-pointer
 
 ##CXXFLAGS=-g -O2
 

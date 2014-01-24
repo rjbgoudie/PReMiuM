@@ -803,6 +803,7 @@ calcAvgRiskAndProfile<-function(clusObj,includeFixedEffects=F){
 								currBeta[,yMat[optAlloc[[c]][i]]+1]
 						}	
 					} else {
+print("ok")
 						currLambda<-currLambda+as.matrix(wMat[optAlloc[[c]],])%*%currBeta
 					}
 				}
