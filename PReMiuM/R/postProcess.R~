@@ -2470,7 +2470,6 @@ globalParsTrace<-function(runInfoObj, parameters = "nClusters",plotBurnIn=FALSE,
 	nFilter=NULL
 	nSubjects=NULL
 	nBurn=NULL
-	reportBurnIn=NULL
 	
 	for (i in 1:length(runInfoObj)) assign(names(runInfoObj)[i],runInfoObj[[i]])
 
