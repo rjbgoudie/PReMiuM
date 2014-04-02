@@ -11,7 +11,7 @@ This function allows to visualise the trace of the global parameters.
 Note that this function has not been optimised for large datasets. 
 
 \item{runInfoObj}{An object of class runInfoObj.}
-\item{parameters}{The parameter whose trace will be plotted. This can be set equal to "nClusters" (default), "alpha", "mmp" and "beta", as by the model. As beta can be a vector, we advise to also set the option "whichBeta" below to select which fixed effect parameter to visualise in the plot.}
+\item{parameters}{The parameter whose trace will be plotted. This can be set equal to "nClusters" (default), "alpha", "mpp" and "beta", as by the model. As beta can be a vector, we advise to also set the option "whichBeta" below to select which fixed effect parameter to visualise in the plot. "mpp" stands for marginal partition posterior, also referred to as marginal model posterior. }
 \item{plotBurnIn}{Set to FALSE (default) it does not plot the trace for the burn in period. Set to TRUE it plots the trace including the burn in period.}
 \item{whichBeta}{Integer which selects which fixed effect parameter is plotted.}
 }

@@ -2067,7 +2067,7 @@ margModelPosterior<-function(runInfoObj,allocation){
 		close(alphaFileName)
 		alpha<-median(alphaValues)
 	}
-	runInfoObj$alphaMMP <- alpha
+	runInfoObj$alphaMPP <- alpha
 
 	if (xModel=="Discrete"){
 		aPhi<-runData[grep('aPhi',runData)]
@@ -2299,7 +2299,7 @@ margModelPosterior<-function(runInfoObj,allocation){
 	yMat=NULL
 	wMat=NULL
 	nSubjects=NULL
-	alphaMMP=NULL
+	alphaMPP=NULL
 
 	for (i in 1:length(runInfoObj)) assign(names(runInfoObj)[i],runInfoObj[[i]])
 
@@ -2317,7 +2317,7 @@ margModelPosterior<-function(runInfoObj,allocation){
 	nPlus<-head(c(rev(cumsum(rev(clusterSizes[-1]))),0),-1)	
 
 	# computation of pX+pZ
-	pZpX<-.Call('pZpX',nClusters,nCategories,hyperParams$aPhi,clusterSizes,nCovariates, zAlloc, as.vector(as.matrix(xMat)), as.integer(nTableNames), alphaMMP, nPlus, PACKAGE = 'PReMiuM')
+	pZpX<-.Call('pZpX',nClusters,nCategories,hyperParams$aPhi,clusterSizes,nCovariates, zAlloc, as.vector(as.matrix(xMat)), as.integer(nTableNames), alphaMPP, nPlus, PACKAGE = 'PReMiuM')
 
 	# computation of pY
 	if (includeResponse==T){
@@ -2527,7 +2527,7 @@ globalParsTrace<-function(runInfoObj, parameters = "nClusters",plotBurnIn=FALSE,
 	
 	for (i in 1:length(runInfoObj)) assign(names(runInfoObj)[i],runInfoObj[[i]])
 
-	if (parameters=="mmp") {
+	if (parameters=="mpp") {
 		parametersIn<-"margModPost"
 	} else {
 		parametersIn<-parameters
@@ -2540,7 +2540,7 @@ globalParsTrace<-function(runInfoObj, parameters = "nClusters",plotBurnIn=FALSE,
 	parData<-read.table(parFileName)
 print(parameters)
 	if(parameters== "nClusters") ylabPar<- "Number of clusters"
-	if(parameters=="mmp") ylabPar<-"Log marginal model posterior"
+	if(parameters=="mpp") ylabPar<-"Log marginal model posterior"
 	if(parameters=="beta") ylabPar<-"beta"
 	if(parameters=="alpha") {
 		if (alpha < -1) {
@@ -2554,7 +2554,7 @@ print(parameters)
 
 
 	if(plotBurnIn==TRUE){
-		if (parameters=="mmp") stop("The mmp is only computed after the burn in. Set plotBurnIn=FALSE.")
+		if (parameters=="mpp") stop("The mpp is only computed after the burn in. Set plotBurnIn=FALSE.")
 		if (reportBurnIn==TRUE) {
 
 			rangeSweeps<-1:((nBurn+nSweeps)/nFilter)
@@ -2564,7 +2564,7 @@ print(parameters)
 			stop("The function globalParsTrace cannot plot the burn in because the reportBurnIn option in profRegr was not set to TRUE and therefore the burn in has not been recorded.")
 		}
 	} else {
-		if (parameters=="mmp"){
+		if (parameters=="mpp"){
 			firstLine<-ifelse(reportBurnIn,nBurn/nFilter+2,1)
 			lastLine<-(nSweeps+ifelse(reportBurnIn,nBurn+1,0))/nFilter
 			rangeSweeps<-firstLine:lastLine#(nBurn+1):(nBurn+nSweeps)
@@ -2587,7 +2587,7 @@ print(parameters)
 
 	if (parameters=="alpha" || parameters=="nClusters"){
 		plot(rangeSweeps,parData[rangeParData,1],type="l",lty=1,col="red",ylab=ylabPar,xlab=xlabPars)
-	} else if (parameters=="mmp"){
+	} else if (parameters=="mpp"){
 		plot(1:nSweeps,parData[,1],type="l",lty=1,col="red",ylab=ylabPar,xlab=xlabPars)
 	} else if (parameters=="beta"){
 		plot(rangeSweeps,parData[rangeParData,whichBeta],type="l",lty=1,col="red",ylab=ylabPar,xlab=xlabPars)
