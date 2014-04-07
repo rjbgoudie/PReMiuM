@@ -1384,6 +1384,7 @@ plotRiskProfile<-function(riskProfObj,outFile,showRelativeRisk=F,orderBy=NULL,wh
 			plotObj<-plotObj+labs(title=ifelse(showRelativeRisk,'Relative Risk','Risk'),plot.title=element_text(size=10))
 			# Margin order is (top,right,bottom,left)
 			plotObj<-plotObj+theme(plot.margin=unit(c(0,0,0,0),'lines'))+theme(plot.margin=unit(c(0.5,0.15,0.5,0.15),'lines'))
+print(plotObj)
 			print(plotObj,vp=viewport(layout.pos.row=1:6,layout.pos.col=2))
 		}	
 	}
