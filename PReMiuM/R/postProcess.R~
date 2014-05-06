@@ -1888,8 +1888,6 @@ calcPredictions<-function(riskProfObj,predictResponseFileName=NULL, doRaoBlackwe
 			predictedY[sweep,,]<-exp(lambda)
 		}else if(yModel=='Normal'){
 			predictedY[sweep,,]<-lambda
-		}else if(yModel=='Survival'){
-			predictedY[sweep,,]<-lambda
 		}else if(yModel=="Categorical"){
 			predictedY[sweep,,]<-exp(lambda)/rowSums(exp(lambda))
 		}
