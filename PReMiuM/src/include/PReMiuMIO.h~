@@ -944,6 +944,7 @@ void initialisePReMiuM(baseGeneratorType& rndGenerator,
 	vector<unsigned int> nXInCluster(maxNClusters,0);
 	unsigned int maxZ=0;
 
+//
 	params.workNClusInit(nClusInit);
 	if (hyperParams.initAlloc().empty()){
 		for(unsigned int i=0;i<nSubjects+nPredictSubjects;i++){

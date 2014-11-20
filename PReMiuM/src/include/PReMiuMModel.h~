@@ -461,19 +461,6 @@ class pReMiuMHyperParams{
 		void rateTauCAR(const double& b){
 			_rateTauCAR = b;
 		}
-
-		vector<double> initAlloc() const{
-			return _initAlloc;
-		}
-
-		void initAlloc(const vector<double>& c){
-			_initAlloc = c;
-		}
-
-		double initAlloc(const unsigned int& j) const{
-			return _initAlloc[j];
-		}
-
 		// Copy operator
 		pReMiuMHyperParams& operator=(const pReMiuMHyperParams& hyperParams){
 			_shapeAlpha = hyperParams.shapeAlpha();
