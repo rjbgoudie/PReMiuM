@@ -665,7 +665,7 @@ calcOptimalClustering<-function(disSimObj,maxNClusters=NULL,useLS=F){
 
 # Function to take the optimal clustering and computing the risk and probability
 # profile
-calcAvgRiskAndProfile<-function(clusObj,includeFixedEffects=F){
+calcAvgRiskAndProfile<-function(clusObj,includeFixedEffects=F,proportionalHazards=F){
 
 	clusObjRunInfoObj=NULL
 	directoryPath=NULL
@@ -917,12 +917,16 @@ calcAvgRiskAndProfile<-function(clusObj,includeFixedEffects=F){
 					currRisk<-matrix(0,ncol=length(optAlloc[[c]]),nrow=nCategoriesY)
 					currRisk<-exp(currLambda)/rowSums(exp(currLambda))
 				}else if(yModel=="Survival"){
-					if (!weibullFixedShape){
-						currNuVector<-currNu[currZ[optAlloc[[c]]]]
-					} else {
-						currNuVector<-nu[sweep]
+					if (proportionalHazards){
+						currRisk<-exp(currLambda)
+					}else{
+						if (!weibullFixedShape){
+							currNuVector<-currNu[currZ[optAlloc[[c]]]]
+						} else {
+							currNuVector<-nu[sweep]
+						}
+						currRisk<-1/((exp(currLambda))^(1/currNuVector))*gamma(1+1/currNuVector)
 					}
-					currRisk<-1/((exp(currLambda))^(1/currNuVector))*gamma(1+1/currNuVector)
 
 				}
 				riskArray[sweep-firstLine+1,c,]<-apply(currRisk,2,mean)
@@ -1917,6 +1921,10 @@ calcPredictions<-function(riskProfObj,predictResponseFileName=NULL, doRaoBlackwe
 		}
 	}
 	
+	if (yModel=="Survival"){
+		restrictedMeanSurvival<-max(clusObjRunInfoObj$yMat[,1])
+	} 
+
 	firstLine<-ifelse(reportBurnIn,nBurn/nFilter+2,1)
 	lastLine<-(nSweeps+ifelse(reportBurnIn,nBurn+1,0))/nFilter
 	nSamples<-lastLine-firstLine+1
@@ -2082,7 +2090,9 @@ calcPredictions<-function(riskProfObj,predictResponseFileName=NULL, doRaoBlackwe
 			predictedY[sweep,,]<-lambda
 		}else if(yModel=='Survival'){
 			if (!weibullFixedShape) nu<-nuArrayPred[sweep,]
-			predictedY[sweep,,]<-1/((exp(lambda))^(1/nu))*gamma(1+1/nu)
+			tmpPredictedY<-1/((exp(lambda))^(1/nu))*gamma(1+1/nu)
+			tmpPredictedY[which(tmpPredictedY>restrictedMeanSurvival)]<-restrictedMeanSurvival
+			predictedY[sweep,,]<-tmpPredictedY
 		}else if(yModel=="Categorical"){
 			predictedY[sweep,,]<-exp(lambda)/rowSums(exp(lambda))
 		}
