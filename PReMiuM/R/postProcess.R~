@@ -291,7 +291,7 @@ profRegr<-function(covNames, fixedEffectsNames, outcome="outcome", outcomeT=NA, 
 	#check entries for spatial CAR term
 	if (includeCAR){
 		if(file.exists(neighboursFile)==FALSE) stop("A valid file for neighbourhood structure must be included for the spatial model.") 
-		islands<-readLines(neighboursFile)
+		islands<-readLines(neighboursFile,skip=1)
 		get_neigh_number<-function(dat){
 			strsplit(dat," ")[[1]][2]
 		}

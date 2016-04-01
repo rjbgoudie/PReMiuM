@@ -40,11 +40,11 @@ double ARSsampleCAR(pReMiuMParams params,
 	const int m = 5;
 	xTmp.resize(m);
 	ui=params.uCAR(iSub);
-	xTmp[0] = ui-50;
-        xTmp[1] = ui-2;
-        xTmp[2] = ui+0;
-        xTmp[3] = ui+2;
-        xTmp[4] = ui+50;
+	xTmp[0] = -1000;
+        xTmp[1] = -0.1;
+        xTmp[2] = ui+0.1;
+        xTmp[3] = 0.8;
+        xTmp[4] = 1000;
 	    xlb=0;
 	    xub=0;
 	    lb=0; //false
