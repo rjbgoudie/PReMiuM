@@ -27,7 +27,14 @@
 \newcommand{\Rfunarg}[1]{{\texttt{#1}}}
 
 \begin{document}
-\SweaveOpts{concordance=TRUE}
+
+<<include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+concordance=TRUE
+)
+@
+
 
 %------------------------------------------------------------
 \title{PReMiuM manual}
@@ -35,8 +42,22 @@
 \author{Silvia Liverani}
 %\date{}
 
-\SweaveOpts{highlight=TRUE, tidy=TRUE, keep.space=TRUE, keep.blank.space=FALSE, keep.comment=TRUE}
-\SweaveOpts{prefix.string=Fig}
+
+<<include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+highlight=TRUE, tidy=TRUE, keep.space=TRUE, keep.blank.space=FALSE, keep.comment=TRUE
+)
+@
+
+
+<<include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+fig.path='Fig'
+)
+@
+
 
 
 \maketitle
@@ -187,7 +208,7 @@ The plot in Figure \ref{fig:summary} can be produced by running the following co
 <<test1>>=
 clusterOrderObj<-plotRiskProfile(riskProfileObj,"summary.png")
 @
-The data for the boxplots of the outcome are available in \verb|riskProfileObj$risk| while the data for the boxplots of the covariates are available in \verb|riskProfileObj$profile|.
+
 
 \begin{figure}[ht]
 \centering
@@ -232,7 +253,7 @@ We now want to produce a few plots to compare the known truth to the clustering 
 
 The first plot is showing how the distribution of the outcome for each true cluster is spread over the clusters identified by profile regression. 
 
-<<test2,fig=TRUE>>=
+<<test2>>=
 library(ggplot2)    
 tmp_boxplot<-data.frame(opt=as.factor(optAlloc),outcome=inputs$inputData$outcome,known=as.factor(known))
 p <- ggplot(tmp_boxplot, aes(x=known, y=outcome, fill=opt)) + 
@@ -247,7 +268,7 @@ p+scale_fill_brewer(palette="Set1")
 
 We can also do this plot replacing the distribution of observed outcome with the posterior distribution of $\theta$. 
 
-<<test3,fig=TRUE>>=
+<<test3>>=
 # Construct the number of clusters file name
 nClustersFileName<-file.path(runInfoObj$directoryPath,paste(runInfoObj$fileStem,'_nClusters.txt',sep=''))
 nClustersFile<-file(nClustersFileName,open="r")
@@ -340,7 +361,7 @@ clusterOrderObj<-plotRiskProfile(riskProfileObj,"summary3.png")
 @
 
 Then we make a composite colour bar plot. 
-<<test1,fig=TRUE>>=
+<<test1>>=
 profile<-riskProfileObj$profile
 meanSortIndex<-clusterOrderObj
 
@@ -386,7 +407,7 @@ colnames(preds)<-names(inputs$inputData)[2:(inputs$nCovariates+1)]
 preds
 @
 Then we can include this dataset into the function \verb|profRegr| using the option \verb|predict| and run the MCMC and the postprocessing functions.  
-<<predict1,results=hide>>=
+<<predict1,results='hide'>>=
 runInfoObj<-profRegr(yModel=inputs$yModel, xModel=inputs$xModel, 
  nSweeps=10000, nBurn=10000, data=inputs$inputData, output="output", 
  covNames=inputs$covNames,predict=preds,
@@ -396,12 +417,12 @@ clusObj <- calcOptimalClustering(dissimObj)
 riskProfileObj <- calcAvgRiskAndProfile(clusObj)
 @
 The function \verb|calcPredictions| extracts the sample from the posterior predictive distribution for the predictive profiles. Below, the first 10 samples from the MCMC are shown for the two predictive profiles selected for this example. 
-<<predict1,results=hide>>=
+<<predict1,results='hide'>>=
 predictions <- calcPredictions(riskProfileObj,fullSweepPredictions=TRUE,fullSweepLogOR=TRUE)
 predictions$predictedYPerSweep[1:10,,1]
 @
 The following command plots the posterior predictive distribution for each of the predictive profiles in the matrix \verb|predictions$predictedYPerSweep|. See Figure \ref{fig:predict}. 
-<<predict1,results=hide>>=
+<<predict1,results='hide'>>=
 plotPredictions(outfile="predictiveDensity.pdf",runInfoObj=runInfoObj,
  predictions=predictions,logOR=TRUE)
 @
